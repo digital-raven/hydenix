@@ -1,3 +1,431 @@
+# [5.1.0](https://github.com/richen604/hydenix/compare/v5.0.3...v5.1.0) (2025-11-07)
+
+
+### Features
+
+* **shell:** source hyde shell functions ([29c9b8f](https://github.com/richen604/hydenix/commit/29c9b8fc07c92395e9683ee05400f7a0f935cb21))
+
+## [5.0.3](https://github.com/richen604/hydenix/compare/v5.0.2...v5.0.3) (2025-11-07)
+
+
+### Bug Fixes
+
+* added checks to flake to catch inputs ([5088809](https://github.com/richen604/hydenix/commit/5088809dbdd353fec0590c6c9c1868b50f4b19a1))
+* update hyde-ipc, closes [#172](https://github.com/richen604/hydenix/issues/172) ([db042bd](https://github.com/richen604/hydenix/commit/db042bd3b6cbbde59b7017a5b055132625f2192a))
+
+## [5.0.2](https://github.com/richen604/hydenix/compare/v5.0.1...v5.0.2) (2025-10-20)
+
+
+### Bug Fixes
+
+* removed hm from template, follow hydenix hm. fixes [#169](https://github.com/richen604/hydenix/issues/169) ([f996c48](https://github.com/richen604/hydenix/commit/f996c488f1b00e6af329c2a9df8f383fa19b4c70))
+
+## [5.0.1](https://github.com/richen604/hydenix/compare/v5.0.0...v5.0.1) (2025-10-10)
+
+
+### Bug Fixes
+
+* bump nixpkgs, fixes [#166](https://github.com/richen604/hydenix/issues/166) ([ae0a8cc](https://github.com/richen604/hydenix/commit/ae0a8ccebf84d92d8db8747a5ff17328c08b84e1))
+
+# [5.0.0](https://github.com/richen604/hydenix/compare/v4.10.1...v5.0.0) (2025-10-07)
+
+
+* feat!: 5.0 release ([7f778f1](https://github.com/richen604/hydenix/commit/7f778f1005ad0010f6b8dc0cc8c245d2f4bce603))
+
+
+### Bug Fixes
+
+* gtk4 theme works correctly on theme changes ([38de924](https://github.com/richen604/hydenix/commit/38de924fb6419f7b7faa67afdd9259a11760da6a))
+* hyde bins import as pkgs, removed in hyde drv ([ee7ed73](https://github.com/richen604/hydenix/commit/ee7ed737b1f12c0c5a04a8b0ba4bde0034a9bb6f))
+* new hyprland location ([1499da7](https://github.com/richen604/hydenix/commit/1499da7d866dce5a7eab5d334e34a993ecdff6ef))
+* pyamdgpuinfo support for waybar modules [#151](https://github.com/richen604/hydenix/issues/151) ([53ddf86](https://github.com/richen604/hydenix/commit/53ddf863ca40b3204dbc10ac48c8b4a3b3eadb84))
+* removed unnecessary sound in vm ([ce04dcf](https://github.com/richen604/hydenix/commit/ce04dcf866a3b2f28b535631d48e99ab2e944ba6))
+* rofi themes and launch fix in hyde drv ([40d49f2](https://github.com/richen604/hydenix/commit/40d49f2e9987fb71f0636a3769cd603762b7030e))
+* theme correctly loads at boot with dconf ([4ffc60d](https://github.com/richen604/hydenix/commit/4ffc60d190f3bf32903c0d6d9d85de35d140202b))
+* themes correctly handle conflicts in arcs using symlinkJoin ([4342a77](https://github.com/richen604/hydenix/commit/4342a77ef4db079fda146b8e91692c484f78265b))
+* update nixpkgs input and fix rofi WIP ([#151](https://github.com/richen604/hydenix/issues/151)) ([3d41678](https://github.com/richen604/hydenix/commit/3d416788e94775c92bcd4df7a91878df3fa3314a))
+
+
+### Features
+
+* greetd hyprlock ([8879abb](https://github.com/richen604/hydenix/commit/8879abb2c2a8e4e39714beac8e45b8cba178182e))
+* new themes ([33b2b24](https://github.com/richen604/hydenix/commit/33b2b24d39ac4574b56f1886ac7e10b48aecf091))
+* new waybar modules ([e5a5f5c](https://github.com/richen604/hydenix/commit/e5a5f5ca06b02ef0a9703f98555f3fa39b975014))
+* nixpkgs and hyde uwsm update wip ([b2e1833](https://github.com/richen604/hydenix/commit/b2e1833a43edc3bf66ce4a8e9eb94b506ece874d))
+* pyprland module options for hyprland ([ee858e9](https://github.com/richen604/hydenix/commit/ee858e9d5eaebc643c44c135ceea75b5a9dbb9f5))
+* qt5 eol. removed hydenix.sddm.theme, added sddm astronaut theme ([ed637f7](https://github.com/richen604/hydenix/commit/ed637f776422e828dd9e4ce4831ab2d4c81b5c73))
+* update-themes script provisioned ([59135a0](https://github.com/richen604/hydenix/commit/59135a041a8e24b0cdb04d3fc0d2ddd58b8218f2))
+* xdg terminals list ([3e9ee0e](https://github.com/richen604/hydenix/commit/3e9ee0e112cc5247f473eb01025e3ee4ef353f7e))
+
+
+### BREAKING CHANGES
+
+* - updated hyde to f246f2a
+- hyde now uses uwsm (`hydenix.hm.uwsm.enable` is true by default)
+- hydenix no longer uses hyde's sddm themes as they rely on deprecated qt5 libraries, `sddm-astronaut` is now used instead by default
+- <details><summary>hydenix template changes: (click to expand)</summary>
+
+  (`template/flake.nix`)
+
+  ```diff
+  diff --git a/template/flake.nix b/template/flake.nix
+  index 125f1e9..0ba0e9a 100644
+  --- a/template/flake.nix
+  +++ b/template/flake.nix
+  @@ -2,31 +2,35 @@
+    description = "template for hydenix";
+
+    inputs = {
+  -    # User's nixpkgs - for user packages
+  +    # Your nixpkgs
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+  -    # Hydenix and its nixpkgs - kept separate to avoid conflicts
+  +    # Hydenix
+      hydenix = {
+        # Available inputs:
+        # Main: github:richen604/hydenix
+  -      # Dev: github:richen604/hydenix/dev
+        # Commit: github:richen604/hydenix/<commit-hash>
+  -      # Version: github:richen604/hydenix/v1.0.0
+  +      # Version: github:richen604/hydenix/v1.0.0 - note the version may not be compatible with this template
+        url = "github:richen604/hydenix";
+  +      # uncomment the below if you know what you're doing, hydenix updates nixos-unstable every week or so
+  +      # inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+  -    # Nix-index-database - for comma and command-not-found
+  -    nix-index-database = {
+  -      url = "github:nix-community/nix-index-database";
+  +    # Home Manager
+  +    home-manager = {
+  +      url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+  +
+  +    # Hardware Configuration's, used in ./configuration.nix. Feel free to remove if unused
+  +    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    };
+
+    outputs =
+      { ... }@inputs:
+     let
+  -      hydenixConfig = inputs.hydenix.inputs.hydenix-nixpkgs.lib.nixosSystem {
+  -        inherit (inputs.hydenix.lib) system;
+  +      system = "x86_64-linux";
+  +      hydenixConfig = inputs.nixpkgs.lib.nixosSystem {
+  +        inherit system;
+           specialArgs = {
+             inherit inputs;
+           };
+  @@ -38,5 +42,6 @@
+       in
+       {
+         nixosConfigurations.hydenix = hydenixConfig;
+  +      nixosConfigurations.default = hydenixConfig;
+       };
+   }
+  ```
+
+  (`template/configuration.nix`)
+
+  ```diff
+  --- a/template/configuration.nix
+  +++ b/template/configuration.nix
+  @@ -5,17 +5,12 @@
+  let
+    # Package configuration - sets up package system with proper overlays
+    # Most users won't need to modify this section
+  -  pkgs = import inputs.hydenix.inputs.hydenix-nixpkgs {
+  -    inherit (inputs.hydenix.lib) system;
+  +  system = "x86_64-linux";
+  +  pkgs = import inputs.nixpkgs {
+  +    inherit system;
+      config.allowUnfree = true;
+      overlays = [
+  -      inputs.hydenix.lib.overlays
+  -      (final: prev: {
+  -        userPkgs = import inputs.nixpkgs {
+  -          inherit (pkgs) system;
+  -          config.allowUnfree = true;
+  -        };
+  -      })
+  +      inputs.hydenix.overlays.default
+      ];
+    };
+  in
+  @@ -24,8 +19,8 @@ in
+
+   imports = [
+     # hydenix inputs - Required modules, don't modify unless you know what you're doing
+  -    inputs.hydenix.inputs.home-manager.nixosModules.home-manager
+  -    inputs.hydenix.lib.nixOsModules
+  +    inputs.home-manager.nixosModules.home-manager
+  +    inputs.hydenix.nixosModules.default
+       ./modules/system # Your custom system modules
+       ./hardware-configuration.nix # Auto-generated hardware config
+
+  @@ -33,17 +28,17 @@ in
+       # Run `lshw -short` or `lspci` to identify your hardware
+
+       # GPU Configuration (choose one):
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-gpu-nvidia # NVIDIA
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-gpu-amd # AMD
+  +    # inputs.nixos-hardware.nixosModules.common-gpu-nvidia # NVIDIA
+  +    # inputs.nixos-hardware.nixosModules.common-gpu-amd # AMD
+
+       # CPU Configuration (choose one):
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-cpu-amd # AMD CPUs
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPUs
+  +    # inputs.nixos-hardware.nixosModules.common-cpu-amd # AMD CPUs
+  +    # inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPUs
+
+       # Additional Hardware Modules - Uncomment based on your system type:
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-hidpi # High-DPI displays
+  +    # inputs.nixos-hardware.nixosModules.common-hidpi # High-DPI displays
+  +    # inputs.nixos-hardware.nixosModules.common-pc-laptop # Laptops
+  +    # inputs.nixos-hardware.nixosModules.common-pc-ssd # SSD storage
+     ];
+
+     # If enabling NVIDIA, you will be prompted to configure hardware.nvidia
+  @@ -68,8 +63,7 @@ in
+         { ... }:
+         {
+           imports = [
+  -          inputs.hydenix.lib.homeModules
+  -          inputs.nix-index-database.hmModules.nix-index # Command-not-found and comma tool support
+  +          inputs.hydenix.homeModules.default
+             ./modules/hm # Your custom home-manager modules (configure hydenix.hm here!)
+           ];
+         };
+  ```
+
+</details>
+
+## [4.10.1](https://github.com/richen604/hydenix/compare/v4.10.0...v4.10.1) (2025-09-14)
+
+
+### Bug Fixes
+
+* **userpkgs:** add system context to prevent evaluation errors ([1b1214c](https://github.com/richen604/hydenix/commit/1b1214c534de4929194bd4ac129c842bf74a8a82))
+
+# [4.10.0](https://github.com/richen604/hydenix/compare/v4.9.0...v4.10.0) (2025-08-28)
+
+
+### Bug Fixes
+
+* **editor:** set default applications and add common code mimetypes ([92c05fc](https://github.com/richen604/hydenix/commit/92c05fc3431362a6aee3d9173905fa5341aed2fd))
+* nixpkgs as main version for inputs ([9038178](https://github.com/richen604/hydenix/commit/9038178d9f34dbbaec0306e86369ee22b2910a6e))
+* removed unnecessary with lib ([7e1d51f](https://github.com/richen604/hydenix/commit/7e1d51ff611e9473df63bf4eef886ca598751057))
+* revert hyprland pkgs, bumped theme. fixes [#143](https://github.com/richen604/hydenix/issues/143) ([bc56c39](https://github.com/richen604/hydenix/commit/bc56c39a77d267712bee0429e269c4c19c91a578))
+* sddm pkg ([71a6a49](https://github.com/richen604/hydenix/commit/71a6a49d2b79913643991b035d419ab6efe1b69a))
+
+
+### Features
+
+* hyde binaries are now added via inputs ([9a2da9b](https://github.com/richen604/hydenix/commit/9a2da9b0d10edd04588b5909a32f7e5ce922da32))
+* hyprland shaders active option and documentation ([8c0eba1](https://github.com/richen604/hydenix/commit/8c0eba166cbd7267b24ef9f62db38cd40ee7b6f1))
+* theme update script ([3e0e191](https://github.com/richen604/hydenix/commit/3e0e191160c0bb1b257c0d900521cb1a8efe4fc9))
+* update flake, fixed sddm, bumped theme hashes ([9e23c12](https://github.com/richen604/hydenix/commit/9e23c1234a971b1b4be2d2ac68a66c6cce08c3b9))
+
+# [4.9.0](https://github.com/richen604/hydenix/compare/v4.8.0...v4.9.0) (2025-08-23)
+
+
+### Bug Fixes
+
+* hydenix-inputs renamed to inputs to prevent naming conflict ([f9bb0e1](https://github.com/richen604/hydenix/commit/f9bb0e13931b07fd806ec6d83460353f6bf6f3c5))
+
+
+### Features
+
+* finished demo vm ([1c7c329](https://github.com/richen604/hydenix/commit/1c7c3295e23bd0d8463f8d8649d63edfc0c0634d))
+* **hyde-update:** completed hyde update ([68bde8a](https://github.com/richen604/hydenix/commit/68bde8aa8208ecd619592d89aa80f1498c1c4b28))
+* **hyde-update:** update fish and zsh shell configs ([192fc08](https://github.com/richen604/hydenix/commit/192fc082b30ff3d288e396b2284d4b098f1d0978))
+* **hyde-update:** update hyprlock config ([fb1ff11](https://github.com/richen604/hydenix/commit/fb1ff11cd27b92501990b41a900ef61d915fce7d))
+* **hyde-update:** update satty config ([19c4c58](https://github.com/richen604/hydenix/commit/19c4c58fcf17dc8660cdbcd776cb6570b0e4bf44))
+* hyprland from flake pkgs ([e446dd1](https://github.com/richen604/hydenix/commit/e446dd174b3eda565c61ad0e27febadb51d19321))
+
+# [4.8.0](https://github.com/richen604/hydenix/compare/v4.7.2...v4.8.0) (2025-08-07)
+
+
+### Bug Fixes
+
+* animation list for hyprland ([ec24dfa](https://github.com/richen604/hydenix/commit/ec24dfa3acfb7ecb29c616e53019549b4e5c62d0))
+* zsh configuration updates for home-manager ([0906968](https://github.com/richen604/hydenix/commit/0906968caeb0b7aa2fcf3175936475ecc723504c))
+
+
+### Features
+
+* added additional hyprland options ([8e4ae8d](https://github.com/richen604/hydenix/commit/8e4ae8d38206d686e49ab501055324941e35d80a))
+* assertions for hm.hyprland and suppressWarnings option ([4d562ff](https://github.com/richen604/hydenix/commit/4d562ff0675622cec03e2c7e0688e3183e07fb75))
+* update nixpkgs ([0248d5d](https://github.com/richen604/hydenix/commit/0248d5d317457eca5db717aa5c68b1e2c66dcdb9))
+
+## [4.7.2](https://github.com/richen604/hydenix/compare/v4.7.1...v4.7.2) (2025-07-18)
+
+
+### Bug Fixes
+
+* typo in Eternal Arctic theme ([e2575cb](https://github.com/richen604/hydenix/commit/e2575cbc38157d62584c972898c9112e109c5ff8))
+
+## [4.7.1](https://github.com/richen604/hydenix/compare/v4.7.0...v4.7.1) (2025-07-10)
+
+
+### Bug Fixes
+
+* bumped theme hash ([04e8fdc](https://github.com/richen604/hydenix/commit/04e8fdc1f69c6e1d1a8876fa4e8a94f948887161))
+
+# [4.7.0](https://github.com/richen604/hydenix/compare/v4.6.0...v4.7.0) (2025-07-07)
+
+
+### Bug Fixes
+
+* bump theme hashes ([693f710](https://github.com/richen604/hydenix/commit/693f710fe8a37e616492579f840708fc5fbf2971))
+* paths for hyde-config service ([0032339](https://github.com/richen604/hydenix/commit/00323393b68173dc12815926ebd89ec10dfe8b16))
+
+
+### Features
+
+* update flake inputs ([41c95a2](https://github.com/richen604/hydenix/commit/41c95a298e3bacabe40463ba3285f7bad0f405a3))
+
+# [4.6.0](https://github.com/richen604/hydenix/compare/v4.5.1...v4.6.0) (2025-07-05)
+
+
+### Bug Fixes
+
+* **fish:** remove conflicting config.fish direct copy ([28888dc](https://github.com/richen604/hydenix/commit/28888dc446954078f6288995632317beeafe28f2))
+* **shell:** set programs.fish.enable when cfg.fish.enable is true ([21c8104](https://github.com/richen604/hydenix/commit/21c8104c961bf17be6e05b688f8400f66e060014))
+
+
+### Features
+
+* **fish:** add shell aliases from hyde config ([301aa7d](https://github.com/richen604/hydenix/commit/301aa7d377b104ae99dbac9e360c7c5c8cf25264))
+* **fish:** add starship, pokego, and fastfetch integration ([94b09e1](https://github.com/richen604/hydenix/commit/94b09e16d2cf3d992b836ff81b77c10b7db43cd5))
+* **fish:** disable fish greeting message ([5381714](https://github.com/richen604/hydenix/commit/5381714a0fce21c71b1cf416331c21cd564a0975))
+* **shell:** add conditional fastfetch to fish init ([46a9f87](https://github.com/richen604/hydenix/commit/46a9f87539d96939a3d18a8439ffd4f27225d88e))
+* **shell:** add eza package to fish configuration ([22b9681](https://github.com/richen604/hydenix/commit/22b9681b94bd91a621ca47b9e65b4fa49456e6fe))
+* **shell:** migrate fish abbreviations to home manager ([0311d02](https://github.com/richen604/hydenix/commit/0311d0262b98039a63c49ca1c502c16a79a980ac))
+
+## [4.5.1](https://github.com/richen604/hydenix/compare/v4.5.0...v4.5.1) (2025-06-30)
+
+
+### Bug Fixes
+
+* **shell:** add missing hyde_config.fish file to fish configuration ([0c1b1c6](https://github.com/richen604/hydenix/commit/0c1b1c60c0191e6c37b00d9f5e553b981e679849))
+
+# [4.5.0](https://github.com/richen604/hydenix/compare/v4.4.0...v4.5.0) (2025-06-27)
+
+
+### Features
+
+* bumped nixpkgs ([1a90289](https://github.com/richen604/hydenix/commit/1a9028973ebcefae2a7b50b11ba41027867d2a98))
+
+# [4.4.0](https://github.com/richen604/hydenix/compare/v4.3.0...v4.4.0) (2025-06-27)
+
+
+### Bug Fixes
+
+* bumped theme hash ([e92cb44](https://github.com/richen604/hydenix/commit/e92cb44493f5894b6cc8b852eb3abe1d29b10a93))
+
+
+### Features
+
+* waybar style option [#123](https://github.com/richen604/hydenix/issues/123) ([9cfc228](https://github.com/richen604/hydenix/commit/9cfc228e01d266ea11b5f9bbcb682c19a6f263e2))
+
+# [4.3.0](https://github.com/richen604/hydenix/compare/v4.2.0...v4.3.0) (2025-06-18)
+
+
+### Bug Fixes
+
+* missing waybar config.jsonc ([1f4a748](https://github.com/richen604/hydenix/commit/1f4a74829efd618d0251f51f845a1b70aeabb542))
+
+
+### Features
+
+* more visible home-manager errors ([cf2a212](https://github.com/richen604/hydenix/commit/cf2a212c19f84ae9187482dc7c3c4273c94d5932))
+
+# [4.2.0](https://github.com/richen604/hydenix/compare/v4.1.0...v4.2.0) (2025-06-18)
+
+
+### Bug Fixes
+
+* update theme hashes ([85ab117](https://github.com/richen604/hydenix/commit/85ab117e91818c469329f4be98fea6d793682c6f))
+
+
+### Features
+
+* good bluetooth default ([a719a48](https://github.com/richen604/hydenix/commit/a719a48761c0af9228da794a850c8a6de8017608))
+* updated hyde to master ([baf3f5e](https://github.com/richen604/hydenix/commit/baf3f5e3f3489d3d2d90af6fe5cb628af4b9643c))
+* updated nixpkgs ([f8f63f0](https://github.com/richen604/hydenix/commit/f8f63f0606423f6dd10df66de15057a937ebddeb))
+
+# [4.1.0](https://github.com/richen604/hydenix/compare/v4.0.2...v4.1.0) (2025-06-10)
+
+
+### Bug Fixes
+
+* invalid wallbash icons path ([8030aa4](https://github.com/richen604/hydenix/commit/8030aa4b70806162806d9b8aee77eefd889101d1))
+
+
+### Features
+
+* manual nixpkgs update ([15ab083](https://github.com/richen604/hydenix/commit/15ab083de3f72239ac042522617c4a231b1d6ecb))
+
+## [4.0.2](https://github.com/richen604/hydenix/compare/v4.0.1...v4.0.2) (2025-06-07)
+
+
+### Bug Fixes
+
+* dconf missing in settheme, fixes error in some rebuilds ([52777d2](https://github.com/richen604/hydenix/commit/52777d2e64c36e73fd2a8ea6e9439bc4a71bd771))
+* only one themeswitch call in settheme ([cd0dfde](https://github.com/richen604/hydenix/commit/cd0dfde6aa138fded3c92c8fa4a770785717dcd7))
+
+## [4.0.1](https://github.com/richen604/hydenix/compare/v4.0.0...v4.0.1) (2025-06-07)
+
+
+### Bug Fixes
+
+* bumped code garden hash [#115](https://github.com/richen604/hydenix/issues/115) ([a8d860f](https://github.com/richen604/hydenix/commit/a8d860f1631e1c3bb99a8a723d7f19c0fc637217))
+* removed onchange for waybar module ([08df345](https://github.com/richen604/hydenix/commit/08df34547e47d02aabe6f63f1bb26e63427fc135))
+
+# [4.0.0](https://github.com/richen604/hydenix/compare/v3.1.0...v4.0.0) (2025-06-05)
+
+
+### Bug Fixes
+
+* swappy default temporarily to fix screenshots ([ceebd67](https://github.com/richen604/hydenix/commit/ceebd671891bbe113580bcb5ea0d528bb00b5c33))
+* vscode default, used hm programs ([e14c90e](https://github.com/richen604/hydenix/commit/e14c90e03683babcc03888c55c9917449b057c6b))
+* wallbash mutable files, nix-ld for hydectl ([44554f9](https://github.com/richen604/hydenix/commit/44554f9b5ebc63e375867db3ebb94bd4cb8290f2))
+* zsh option changes ([33985f7](https://github.com/richen604/hydenix/commit/33985f7cfe6ce9fe5bf9d1d7c01d56fd8439fa94))
+
+
+### Features
+
+* add crimson-blue ([89b9db9](https://github.com/richen604/hydenix/commit/89b9db9a0e80d07c81d619a06f0d5b08b4b7ee3c))
+* add electra ([47ec46b](https://github.com/richen604/hydenix/commit/47ec46b4f4eb8f0455d5439b5e522b08df4fa8a2))
+* add grukai ([6fce198](https://github.com/richen604/hydenix/commit/6fce198dfdc1f266f5ce7eefb7ed1d27f85fb965))
+* added amethyst aura ([f7dbe59](https://github.com/richen604/hydenix/commit/f7dbe5941fa1b2944ba59833386a35195911ae2c))
+* added code garden ([506f194](https://github.com/richen604/hydenix/commit/506f19460f1d8f327c393da8229a96b79b19bc0a))
+* added codium flags ([fa950b3](https://github.com/richen604/hydenix/commit/fa950b3d73f82def3d3782a1afb4cc2d7562cc5d))
+* added hyprlock, shaders, workflows ([ee28ed0](https://github.com/richen604/hydenix/commit/ee28ed0e89abc1f04f323bc1f77bc7bd6b98ba1b))
+* added nightbrew ([fcd0314](https://github.com/richen604/hydenix/commit/fcd0314ff37d510c1d326bba5702ef40f395ea02))
+* added piece of mind and obsidian purple ([69725cc](https://github.com/richen604/hydenix/commit/69725cc68bfb62b40d743a873493096907542cf2))
+* added tundra, limefrenzy, ancientalien themes ([4c9b851](https://github.com/richen604/hydenix/commit/4c9b851dbae29a2bd9d6469f5fe712ec58774cd6))
+* fastfetch default on shell prompt ([8588042](https://github.com/richen604/hydenix/commit/85880426a40b5d11bd0a3e91c82576313efff8f9))
+* fish functions ([7ec79c8](https://github.com/richen604/hydenix/commit/7ec79c86426bbba24feff70f56d9e4cc472e0572))
+* hyde flake input, hyde-update script ([001aefa](https://github.com/richen604/hydenix/commit/001aefa5c73134e4cb773dbe26f9eb33088fbb50))
+* hyprland extraconfig ([240a48f](https://github.com/richen604/hydenix/commit/240a48f838933c171ce368028706484c6cf35c56))
+* init functional hydevm ([35ac0d8](https://github.com/richen604/hydenix/commit/35ac0d8b6c30526440c077fbc568e2692c680ed9))
+* more shell config, xdg ([e66c56a](https://github.com/richen604/hydenix/commit/e66c56a74f04dc6e7a56e911d6019322bbbbc888))
+* qt6ct ([bb74a7c](https://github.com/richen604/hydenix/commit/bb74a7c4d7a1a8e43beb33f1c868c42ee40469f1))
+* removed vscodium flags, added starship ([ebaf7f4](https://github.com/richen604/hydenix/commit/ebaf7f438598a15abc05b65920c621626f705641))
+* revised editors, packages ([0c4b369](https://github.com/richen604/hydenix/commit/0c4b369717b46670160923d1eaf7c9fd1269b400))
+* starship default ([7b9b361](https://github.com/richen604/hydenix/commit/7b9b361296092a26d18dae7ceeb87e627d56b9a2))
+* waybar update ([52f8199](https://github.com/richen604/hydenix/commit/52f8199c36a13a8d78a2eb597eabeed10a5c080c))
+* zsh plugins option, api docs ([4f2a549](https://github.com/richen604/hydenix/commit/4f2a549228dc01efec36eb68df718f12d24d3d3e))
+
+
+### BREAKING CHANGES
+
+* api updates
+
 # [3.1.0](https://github.com/richen604/hydenix/compare/v3.0.0...v3.1.0) (2025-05-19)
 
 

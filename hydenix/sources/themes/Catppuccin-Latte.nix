@@ -4,12 +4,11 @@ mkTheme rec {
   src = pkgs.fetchFromGitHub {
     owner = "HyDE-Project";
     repo = "hyde-themes";
-    rev = "Catppuccin-Latte";
+    rev = "9a9332bb660ecb2e05671b7dcd7dd058b0803e48";
     name = name;
-    sha256 = "sha256-lIxkf/3zXimt1lYfj5Vt6uks4L9IhYUFJM7b9H7UniY=";
+    sha256 = "sha256-dW5DgXFxFNjt54Styzk+Ew3pv4rO1FX/qtfDGIClLuY=";
   };
   meta = {
-    priority = 100;
     description = "HyDE Theme: Catppuccin Latte";
     homepage = "https://github.com/HyDE-Project/hyde-themes/tree/Catppuccin-Latte";
   };

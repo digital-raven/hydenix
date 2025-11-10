@@ -1,79 +1,68 @@
-# Hydenix Template
+<img align="right" width="75px" alt="NixOS" src="https://github.com/HyDE-Project/HyDE/blob/master/Source/assets/nixos.png?raw=true"/>
 
-Welcome to the Hydenix template!
+# hydenix template flake
 
-This template is designed to help you get started with Hydenix. It includes a basic configuration for Hydenix and some common modules.
+This is now your personal NixOS configuration.\
+Add packages, customize themes, or even disable hydenix and setup your own wm/de.\
+Enjoy the full power of Nix!
 
-If you just templated this flake, you can follow these steps to get started:
+visit the [docs/installation.md](./docs/installation.md) to get started.
 
-1. edit `configuration.nix` with your preferences for hydenix
-   - options needing to be changed are marked with `! EDIT`
-   - (optional) in your template flake folder, review both `./configuration.nix` and `./modules/hm/default.nix` for more options
-2. run `sudo nixos-generate-config --show-hardware-config > hardware-configuration.nix`
-3. `git init && git add .` (flakes have to be managed via git)
-4. run any of the packages in your new `flake.nix`
-    - for rebuild, use `sudo nixos-rebuild switch --flake .`
-5. DON'T FORGET: change your password for all users with `passwd` from initialPassword set in `configuration.nix`
+## file structure
 
-NOTE: After launching hydenix, you can run `hyde-shell reload` to generate cache for remaining themes if you want.
+### core configuration files
 
-All module options are documented [here](https://github.com/richen604/hydenix/blob/main/docs/faq.md#What-are-the-module-options).
+| file | description |
+|------|-------------|
+| `flake.nix` | main flake configuration and entry point |
+| `configuration.nix` | nixos system configuration |
+| `hardware-configuration.nix` | hardware-specific settings (auto-generated) |
 
-Other than that, this is your own nixos configuration. You can do whatever you want with it.
-Add modules, change packages, add flakes, even disable hydenix and try something else!
+### documentation
 
-If you have any questions, please refer to the [FAQ](https://github.com/richen604/hydenix/blob/main/docs/faq.md) or [Hydenix README](https://github.com/richen604/hydenix/blob/main/README.md).
+| file | purpose |
+|------|---------|
+| [`docs/installation.md`](./docs/installation.md) | installation guide and setup instructions |
+| [`docs/options.md`](./docs/options.md) | available module configuration options |
+| [`docs/faq.md`](./docs/faq.md) | frequently asked questions and solutions |
+| [`docs/troubleshooting.md`](./docs/troubleshooting.md) | common issues and fixes |
+| [`docs/upgrading.md`](./docs/upgrading.md) | how to upgrade your configuration |
+| [`docs/contributing.md`](./docs/contributing.md) | guidelines for contributing |
+| [`docs/community.md`](./docs/community.md) | community configurations and examples |
 
-You can also reach out to me on the [Hyde Discord](https://discord.gg/AYbJ9MJez7) or [Hydenix GitHub Discussions](https://github.com/richen604/hydenix/discussions).
+### write your own modules
 
-## Upgrading
+> **note:** Use these directories to override or extend hydenix modules with your custom configurations.
 
-Hydenix can be upgraded, downgraded, or version locked easy.
-in your template flake folder, update hydenix to main using
+| directory | type | purpose |
+|-----------|------|---------|
+| `modules/hm/` | home manager | custom home-manager module definitions (and for `hydenix.hm` options) |
+| `modules/system/` | nixos system | custom system-level module definitions (and for `hydenix` options) |
+
+### directory tree
 
 ```bash
-nix flake update hydenix
+hydenix/
+├── README.md
+├── flake.nix
+├── configuration.nix
+├── hardware-configuration.nix
+├── docs/
+│   ├── *.md files
+│   └── assets/
+└── modules/
+    ├── hm/default.nix
+    └── system/default.nix
 ```
 
-or define a specific version in your `flake.nix` template
+## next steps
 
-```nix
-inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hydenix = {
-      # Available inputs:
-      # Main: github:richen604/hydenix
-      # Dev: github:richen604/hydenix/dev 
-      # Commit: github:richen604/hydenix/<commit-hash>
-      # Version: github:richen604/hydenix/v1.0.0
-      url = "github:richen604/hydenix";
-    };
-  };
-```
+- to learn more about nix, see [nix resources](./docs/faq.md#how-do-i-learn-more-about-nix)
+- see [module options](./docs/options.md) for configuration
+- check the [faq](./docs/faq.md) and [troubleshooting](./docs/troubleshooting.md) guides
 
-run `nix flake update hydenix` again to load the update, then rebuild your system to apply the changes
+## getting help
 
-## When to Upgrade
-
-```mermaid
-graph TD
-    A[v2.3.1] --> B[MAJOR]
-    A --> C[MINOR]
-    A --> D[PATCH]
-    B --> E[Breaking Changes<br>Review Release Notes for API Changes]
-    C --> F[New Features<br>Safe to Update]
-    D --> G[Bug Fixes<br>Safe to Update]
-
-    style A fill:#c79bf0,stroke:#ebbcba,stroke-width:2px,color:#000
-    style B fill:#ebbcba,stroke:#c79bf0,stroke-width:2px,color:#000
-    style C fill:#ebbcba,stroke:#c79bf0,stroke-width:2px,color:#000
-    style D fill:#ebbcba,stroke:#c79bf0,stroke-width:2px,color:#000
-    style E fill:#f6f6f6,stroke:#c79bf0,stroke-width:2px,color:#000
-    style F fill:#f6f6f6,stroke:#c79bf0,stroke-width:2px,color:#000
-    style G fill:#f6f6f6,stroke:#c79bf0,stroke-width:2px,color:#000
-```
-
-- **Always review [release notes](https://github.com/richen604/hydenix/releases) for major updates (API changes)**
-- Keep up with patches for stability
-- Update to minor versions for new features
-  
+- [hydenix issues](https://github.com/richen604/hydenix/issues)
+- [hydenix discussions](https://github.com/richen604/hydenix/discussions)
+- [hyde discord](https://discord.gg/AYbJ9MJez7)

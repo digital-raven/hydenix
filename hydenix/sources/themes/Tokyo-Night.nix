@@ -4,13 +4,12 @@ mkTheme rec {
   src = pkgs.fetchFromGitHub {
     owner = "HyDE-Project";
     repo = "hyde-themes";
-    rev = "da8c38b7a6927eb585203e28fb8e403203578fe5";
+    rev = "4c4bda0ce67385fe865dc42be75b8931608793c6";
     name = name;
-    sha256 = "sha256-YL91+Q7CIGT+Ams9FOdw343OgQ19NWz6GJZEG37Gg9A=";
+    sha256 = "sha256-ntM6cfHI4BBiFkp1ylqDjZxAqefV4x/rG0A6gqD1jR4=";
   };
   meta = {
     description = "HyDE Theme: Tokyo Night";
     homepage = "https://github.com/HyDE-Project/hyde-themes/tree/Tokyo-Night";
-    priority = 100;
   };
 }

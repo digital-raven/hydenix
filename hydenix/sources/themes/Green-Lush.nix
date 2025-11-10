@@ -4,13 +4,12 @@ mkTheme rec {
   src = pkgs.fetchFromGitHub {
     owner = "abenezerw";
     repo = "Green-Lush";
-    rev = "61a21b77a8b285b88f3cc5e1677dae64456dd370";
+    rev = "e3b8b6af05e1f8ec6f2a63c86cf2c7717fd1468d";
     name = name;
-    sha256 = "sha256-Z0TdPlk5sPIAVZvoZeEbzs61XhTx5p6q9vm3hhhhY0o=";
+    sha256 = "sha256-4k3EXKyHkVPrqnZuviHpmSc+kNIVysZTGu0hd/XT+UA=";
   };
   meta = {
     description = "HyDE Theme: Green Lush";
     homepage = "https://github.com/abenezerw/Green-Lush";
-    priority = 10;
   };
 }

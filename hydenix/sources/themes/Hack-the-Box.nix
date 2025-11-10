@@ -4,13 +4,12 @@ mkTheme rec {
   src = pkgs.fetchFromGitHub {
     owner = "HyDE-Project";
     repo = "hyde-gallery";
-    rev = "36fa09171cd1d14156086542df020369b9f8b8fa";
+    rev = "f8f6070ec27329c52f145a156dd61929781e2048";
     name = name;
-    sha256 = "sha256-ww7LoUVHlJhYUE2VSguhE7OZblx0hbQp6IaWAJSLcy4=";
+    sha256 = "sha256-VMDs9fnXX0v7iGSftA19UXxANY1sRjrK5ipMsfjU7Tg=";
   };
   meta = {
     description = "HyDE Theme: Hack the Box";
     homepage = "https://github.com/HyDE-Project/hyde-gallery/tree/Hack-the-Box";
-    priority = 10;
   };
 }

@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   ...
 }:
@@ -14,7 +15,7 @@
     ./gtk.nix
     ./git.nix
     ./hyde.nix
-    ./hyprland.nix
+    ./hyprland
     ./lockscreen.nix
     ./notifications.nix
     ./qt.nix
@@ -26,6 +27,7 @@
     ./swww.nix
     ./terminals.nix
     ./theme.nix
+    ./uwsm.nix
     ./waybar.nix
     ./wlogout.nix
     ./xdg.nix
@@ -38,6 +40,9 @@
   config = {
     hydenix.hm.enable = lib.mkDefault false;
     home.stateVersion = "25.05";
+
+    # let home-manager control itself
+    programs.home-manager.enable = true;
   };
 
 }

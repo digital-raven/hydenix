@@ -43,7 +43,7 @@ in
     swappy = {
       enable = lib.mkOption {
         type = lib.types.bool;
-        default = false;
+        default = false; # Disabled by default
         description = "Enable swappy screenshot editor";
       };
     };
@@ -56,5 +56,12 @@ in
       (lib.mkIf cfg.satty.enable satty) # screenshot annotation tool
       (lib.mkIf cfg.swappy.enable swappy) # screenshot editor
     ];
+
+    home.file = lib.mkIf cfg.satty.enable {
+      ".config/satty/config.toml" = {
+        source = "${pkgs.hyde}/Configs/.config/satty/config.toml";
+        force = true;
+      };
+    };
   };
 }

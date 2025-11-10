@@ -19,7 +19,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    #! we are using libsForQt5 because dolphin likes to break things like icons on qt6
     home.packages = with pkgs.kdePackages; [
       dolphin # KDE file manager
       qtimageformats # Image format support for Qt5
@@ -43,18 +42,18 @@ in
 
     home.file = {
       ".config/dolphinrc" = {
-        source = "${pkgs.hydenix.hyde}/Configs/.config/dolphinrc";
+        source = "${pkgs.hyde}/Configs/.config/dolphinrc";
       };
       ".config/baloofilerc" = {
-        source = "${pkgs.hydenix.hyde}/Configs/.config/baloofilerc";
+        source = "${pkgs.hyde}/Configs/.config/baloofilerc";
       };
       ".config/menus/applications.menu" = {
-        source = "${pkgs.hydenix.hyde}/Configs/.config/menus/applications.menu";
+        source = "${pkgs.hyde}/Configs/.config/menus/applications.menu";
       };
 
       # stateful file for themes
       ".config/kdeglobals" = {
-        source = "${pkgs.hydenix.hyde}/Configs/.config/kdeglobals";
+        source = "${pkgs.hyde}/Configs/.config/kdeglobals";
         force = true;
         mutable = true;
       };

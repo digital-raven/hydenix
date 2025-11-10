@@ -1,8 +1,9 @@
-{ hydenix-inputs }:
+{ inputs }:
 
 let
-  pkgs = import hydenix-inputs.hydenix-nixpkgs {
-    inherit (hydenix-inputs.lib) system;
+  system = "x86_64-linux";
+  pkgs = import inputs.nixpkgs {
+    inherit system;
     config.allowUnfree = true;
   };
 in

@@ -5,8 +5,6 @@
   ...
 }:
 
-with lib;
-
 let
   cfg = config.hydenix.boot;
 in
@@ -18,32 +16,35 @@ in
       description = "Enable boot module";
     };
 
-    useSystemdBoot = mkOption {
-      type = types.bool;
+    useSystemdBoot = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "Whether to use systemd-boot (true) or GRUB (false)";
     };
 
-    grubTheme = mkOption {
-      type = types.package;
-      default = pkgs.hydenix.grub-retroboot;
-      description = "GRUB theme package to use, use either grub-retroboot or grub-pochita";
+    grubTheme = lib.mkOption {
+      type = lib.types.enum [
+        "Retroboot"
+        "Pochita"
+      ];
+      default = "Retroboot";
+      description = "GRUB theme to use, use either `Retroboot` or `Pochita`";
     };
 
-    grubExtraConfig = mkOption {
-      type = types.lines;
+    grubExtraConfig = lib.mkOption {
+      type = lib.types.lines;
       default = "";
       description = "Additional configuration for GRUB";
     };
 
-    kernelPackages = mkOption {
-      type = with types; attrs;
+    kernelPackages = lib.mkOption {
+      type = lib.types.attrs;
       default = pkgs.linuxPackages_zen;
       description = "Kernel packages to use";
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     boot = {
       kernelPackages = cfg.kernelPackages;
       loader =
@@ -65,7 +66,8 @@ in
               efiSupport = true;
               device = "nodev";
               useOSProber = true;
-              theme = cfg.grubTheme;
+              theme =
+                pkgs.hyde + "/share/grub/themes/" + (if cfg.grubTheme == "Pochita" then "Pochita" else "Retroboot");
               extraConfig = cfg.grubExtraConfig;
             };
             efi.canTouchEfiVariables = true;

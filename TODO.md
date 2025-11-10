@@ -1,106 +1,200 @@
 
-# todo / roadmap
+# todo
 
-## priority
+## done
 
-- [x] feat: added code garden
-- [x] feat: add crimson-blue
-- [x] feat: add electra
-- [x] feat: add grukai
-- [x] feat: add piece of mind
-- [x] feat: add obsidian purple
-- [x] feat: add nightbrew
-- [x] feat: add amethyst-aura
-- [ ] fix: vscode wallbash
-- [ ] fix: boot module grub is not working?
-- [ ] feat: spicetify theme support with declarative flatpak
-- [ ] feat: update hyde
-- [ ] fix: xdg theme inconsistency
-  - check xdgportalfix.sh or whatever its called 
-- [ ] fix: wall.set in themes doesn't work correctly
-- [ ] fix: waybar crashes on rebuild
-- [ ] chore: review bug template
-- [ ] docs: better documented drivers in template flake, plus nvidia default settings
-- [ ] feat: hyprland via home-manager
-  - support plugins
-  - use hyprland flake package
-  - nixGL
+## now
 
-## iso builder
+- refactor: rename all overlays so there is no namespace nesting
 
-- [ ] feat: iso builder should give a copy of the iso to the user on install
-- [ ] feat: iso builder automated install should have more clear options, not just configuration.nix
-- [ ] feat: iso builder should tell user exact steps of auto installer, reflect that in the readme
-- [ ] fix: iso builder should prompt to edit hostname in flake.nix
-- [ ] refactor: expand iso installer sections to be more clear and concise
-- [ ] feat: iso installer section option to clone your own personal flake from github and use that instead of the hyde template
-- [ ] feat: Completed iso builder
+## next
 
-## config.toml integration
+- feat: home-manager configuration in flake
 
-- [ ] feat: hyde config.toml module and options in hyde.nix
-- [ ] feat: other program configuration should determine hyde config.toml options
-- [ ] feat: extend hyde config.toml options for more nix integration
+## 5.0.0
 
-## hyprland.conf
+feat!: 5.0 release
 
-- [ ] feat: more options in hyprland.nix
-- [ ] feat: other program configuration should determine hyprland.conf options eg
+existing template has gone through a major overhaul, please read through all the breaking changes below. at worst generate a new template and copy your config over.
 
-## hypridle
+a restart or `nixos-rebuild boot` is required for this update
 
-- [ ] feat: hypridle module and options
-- [ ] feat: use dpms-off instead of hyprctl dispatch dpms off in hypridle
+BREAKING CHANGES:
 
-## hyprlock
+- updated hyde to f246f2a
+- hyde now uses uwsm (`hydenix.hm.uwsm.enable` is true by default)
+- hydenix no longer uses hyde's sddm themes as they rely on deprecated qt5 libraries, `sddm-astronaut` is now used instead by default
+- <details><summary>hydenix template changes: (click to expand)</summary>
 
-- [ ] feat: better hyprlock options
+  (`template/flake.nix`)
 
-## uncategorized
+  ```diff
+  diff --git a/template/flake.nix b/template/flake.nix
+  index 125f1e9..0ba0e9a 100644
+  --- a/template/flake.nix
+  +++ b/template/flake.nix
+  @@ -2,31 +2,35 @@
+    description = "template for hydenix";
+  
+    inputs = {
+  -    # User's nixpkgs - for user packages
+  +    # Your nixpkgs
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  
+  -    # Hydenix and its nixpkgs - kept separate to avoid conflicts
+  +    # Hydenix
+      hydenix = {
+        # Available inputs:
+        # Main: github:richen604/hydenix
+  -      # Dev: github:richen604/hydenix/dev
+        # Commit: github:richen604/hydenix/<commit-hash>
+  -      # Version: github:richen604/hydenix/v1.0.0
+  +      # Version: github:richen604/hydenix/v1.0.0 - note the version may not be compatible with this template
+        url = "github:richen604/hydenix";
+  +      # uncomment the below if you know what you're doing, hydenix updates nixos-unstable every week or so
+  +      # inputs.nixpkgs.follows = "nixpkgs";
+      };
+  
+  -    # Nix-index-database - for comma and command-not-found
+  -    nix-index-database = {
+  -      url = "github:nix-community/nix-index-database";
+  +    # Home Manager
+  +    home-manager = {
+  +      url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+  +
+  +    # Hardware Configuration's, used in ./configuration.nix. Feel free to remove if unused
+  +    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    };
+  
+    outputs =
+      { ... }@inputs:
+     let
+  -      hydenixConfig = inputs.hydenix.inputs.hydenix-nixpkgs.lib.nixosSystem {
+  -        inherit (inputs.hydenix.lib) system;
+  +      system = "x86_64-linux";
+  +      hydenixConfig = inputs.nixpkgs.lib.nixosSystem {
+  +        inherit system;
+           specialArgs = {
+             inherit inputs;
+           };
+  @@ -38,5 +42,6 @@
+       in
+       {
+         nixosConfigurations.hydenix = hydenixConfig;
+  +      nixosConfigurations.default = hydenixConfig;
+       };
+   }
+  ```
 
-- [ ] feat: is code the default EDITOR? change editors.nix
-   yes, code-oss though, not code
-- [ ] feat: cleanupOnDisable activation script and option
+  (`template/configuration.nix`)
 
-## CI
+  ```diff
+  --- a/template/configuration.nix
+  +++ b/template/configuration.nix
+  @@ -5,17 +5,12 @@
+  let
+    # Package configuration - sets up package system with proper overlays
+    # Most users won't need to modify this section
+  -  pkgs = import inputs.hydenix.inputs.hydenix-nixpkgs {
+  -    inherit (inputs.hydenix.lib) system;
+  +  system = "x86_64-linux";
+  +  pkgs = import inputs.nixpkgs {
+  +    inherit system;
+      config.allowUnfree = true;
+      overlays = [
+  -      inputs.hydenix.lib.overlays
+  -      (final: prev: {
+  -        userPkgs = import inputs.nixpkgs {
+  -          inherit (pkgs) system;
+  -          config.allowUnfree = true;
+  -        };
+  -      })
+  +      inputs.hydenix.overlays.default
+      ];
+    };
+  in
+  @@ -24,8 +19,8 @@ in
+ 
+   imports = [
+     # hydenix inputs - Required modules, don't modify unless you know what you're doing
+  -    inputs.hydenix.inputs.home-manager.nixosModules.home-manager
+  -    inputs.hydenix.lib.nixOsModules
+  +    inputs.home-manager.nixosModules.home-manager
+  +    inputs.hydenix.nixosModules.default
+       ./modules/system # Your custom system modules
+       ./hardware-configuration.nix # Auto-generated hardware config
+   
+  @@ -33,17 +28,17 @@ in
+       # Run `lshw -short` or `lspci` to identify your hardware
+   
+       # GPU Configuration (choose one):
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-gpu-nvidia # NVIDIA
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-gpu-amd # AMD
+  +    # inputs.nixos-hardware.nixosModules.common-gpu-nvidia # NVIDIA
+  +    # inputs.nixos-hardware.nixosModules.common-gpu-amd # AMD
+   
+       # CPU Configuration (choose one):
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-cpu-amd # AMD CPUs
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPUs
+  +    # inputs.nixos-hardware.nixosModules.common-cpu-amd # AMD CPUs
+  +    # inputs.nixos-hardware.nixosModules.common-cpu-intel # Intel CPUs
+   
+       # Additional Hardware Modules - Uncomment based on your system type:
+  -    # inputs.hydenix.inputs.nixos-hardware.nixosModules.common-hidpi # High-DPI displays
+  +    # inputs.nixos-hardware.nixosModules.common-hidpi # High-DPI displays
+  +    # inputs.nixos-hardware.nixosModules.common-pc-laptop # Laptops
+  +    # inputs.nixos-hardware.nixosModules.common-pc-ssd # SSD storage
+     ];
+   
+     # If enabling NVIDIA, you will be prompted to configure hardware.nvidia
+  @@ -68,8 +63,7 @@ in
+         { ... }:
+         {
+           imports = [
+  -          inputs.hydenix.lib.homeModules
+  -          inputs.nix-index-database.hmModules.nix-index # Command-not-found and comma tool support
+  +          inputs.hydenix.homeModules.default
+             ./modules/hm # Your custom home-manager modules (configure hydenix.hm here!)
+           ];
+         };
+  ```
 
-- [ ] ci: fix iso builder release flake check
+</details>
 
-## Future Enhancements
+## backlog
 
-- [ ] Ecosystem
-  - [ ] feat: Create sddm-hyprland
-  - [ ] feat: Integrate hydepanel from rubin
-  - [ ] feat: Add telegram theme support
-  - [ ] feat: Add zed theme support
-  - [ ] feat: Add obsidian theme support
-  - [ ] feat: Add terminal-emulators support
-  - [ ] feat: Add updated HyDE/code-wallbash nix support
-- [ ] feat: full nixos config & full home-manager config
-- [ ] feat: Set NIX-PATH to template flake location
+- feat: move hyprlock to hyprland module, swaylock should just be swaylock module
+  - assertion to not have both enabled
+- feat: extending more options for feature parity with hyde
+  - fastfetch
+  - hyprlock
+  - rofi
+  - waybar
+- fix: i don't think .config/waybar/modules is supposed to be set anymore
+- fix: remove duplicate udisks2 setup
+- hm.hyprland should have more warnings related to config overrides
+- feat: hyde config.toml options
+- demo video? fix demo-vm
+- fix: wallbash for code
+- feat: assertions for common requirements
+- chore: review bug template to make it more clear (easier with scripts?)
+- feat: enhance `mutable` Home Manager option for `home.file`, `xdg.configFile`, `xdg.dataFile`:
+  - introduce `mutable.enable` (boolean) and `mutable.mode` (enum: `initOnly`, `replace`) for fine-grained control over file copying behavior.
+  - implement custom cleanup logic for `mutable.enable = true` files, ensuring they are removed when no longer declared in the configuration.
+    - largest hurdle is if users remove the module the stale files will exist as mutable.nix is no longer imported
+  - ensure this cleanup mechanism supports Home Manager generation rollbacks.
+  - create a simple flake to test and export as a full module
+- feat: spicetify theme support? flatpak?
 
-## Non-NixOS
+## future?
 
-https://github.com/jpikl/pm for non-nixos packages
-specific scripts for each non-nixos distro options, ideally one script for all packages using pm
-nixGL wrapping for all prorgrams, well documented in the configuration as users will need to edit it. combine with any driver setup
-
-## Hyde repo
-
-- [ ] theme makers should be able to precache walls before patching
-  - [ ] requires arch vm (w/ commit hash param and snapshot functionality)
-  - [ ] hyde-theme-starter to implement /lib with swwwallcache and wallbash
-    - whatever generates dcols and wallcaches
-  - [ ] hyde repo themepatcher implement reading for .cache in theme to cp cache and skip
-  - [ ] validation
-    - [ ] themepatcher should still generate on missing cache per wall
-  - [ ] PR's for all themes to bring cache
-  - [ ] hydenix implementation (just home.file mutable)
-  - [ ] FUTURE: wallbash should be a seperate lib
-- [ ] hyde-shell reload requires display, unable to run in activation scripts
-- [ ] caffiene mode resets on hyde-shell reload
-- [ ] some yubikey touch detection for hyprlock and waybar <https://github.com/maximbaz/yubikey-touch-detector>
-
-- [ ] hyde themes should precache things, there is no reason each user should have to build cache
-This will heavily improve performance of first boot, as swwwallcache is not built
-This feature would be outside of hydenix, most likely a PR to both theme maintainers and hyde
+- binary cache when i build it
+- using nixos-anywhere to install hydenix:
+  - must be part of the template flake or a new template flake, as it will be used for the user configuration
+  - document disko configuration clearly, the issue is ive never used disko
+  - most likely will need its own video installation guide
+- nh by default?
+- docs: documentation generation using nixosOptionsDoc <https://bmcgee.ie/posts/2023/03/til-how-to-generate-nixos-module-docs/>
+- refactor: revise module hierarchy to be more clear and concise?

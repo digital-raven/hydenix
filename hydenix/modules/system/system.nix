@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -28,6 +29,7 @@ in
       envsubst # Environment variable substitution utility
       killall # Process termination utility
       wl-clipboard # Wayland clipboard utilities
+      wl-clip-persist # Keep Wayland clipboard even after programs close (avoids crashes)
       gnumake # Build automation tool
       git # distributed version control system
       fzf # command line fuzzy finder
@@ -52,6 +54,8 @@ in
       gawk # awk implementation
       coreutils # coreutils implementation
       bash-completion # Add bash-completion package
+
+      hypridle
     ];
 
     environment.variables = {
@@ -59,37 +63,31 @@ in
     };
 
     programs.hyprland = {
+      package = pkgs.hyprland;
+      portalPackage = pkgs.xdg-desktop-portal-hyprland;
       enable = true;
-      withUWSM = false;
+      withUWSM = true;
     };
 
-    environment.pathsToLink = [
-      "/share/icons"
-      "/share/themes"
-      "/share/fonts"
-      "/share/xdg-desktop-portal"
-      "/share/applications"
-      "/share/mime"
-      "/share/wayland-sessions"
-      "/share/zsh"
-      "/share/bash-completion"
-      "/share/fish"
-    ];
+    programs.nix-ld.enable = true;
 
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          Experimental = true;
+        };
+      };
     };
 
     services = {
       dbus.enable = true;
+
       upower.enable = true;
       openssh.enable = true;
       libinput.enable = true;
-      udisks2 = {
-        enable = true;
-        mountOnMedia = true;
-      };
     };
 
     programs.dconf.enable = true;

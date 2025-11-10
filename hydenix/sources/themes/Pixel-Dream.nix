@@ -4,13 +4,12 @@ mkTheme rec {
   src = pkgs.fetchFromGitHub {
     owner = "rishav12s";
     repo = "Pixel-Dream";
-    rev = "c7765210fe3610742ccb955278f2f3a2ebe3f0d9";
+    rev = "79607bbf37c356acb80992c8302ada3336f9d8fa";
     name = name;
-    sha256 = "sha256-vPtWjTWHttUPJBtxcJY9jiBrP6jH/r0IIwGmmoINQyw=";
+    sha256 = "sha256-uuqktN19CBY8EDleC+8U/vXrPgwH/lStS8G6hyN+fWE=";
   };
   meta = {
     description = "Pixel Art inspired theme";
     homepage = "https://github.com/rishav12s/Pixel-Dream";
-    priority = 10;
   };
 }

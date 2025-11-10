@@ -4,13 +4,12 @@ mkTheme rec {
   src = pkgs.fetchFromGitHub {
     owner = "HyDE-Project";
     repo = "hyde-gallery";
-    rev = "1701be171600db27b04f8bf704dc37efe36cd282";
+    rev = "2ce4d3eae646b96133df919c87dc052152033a1d";
     name = name;
-    sha256 = "sha256-J8H+obYoePdAwkOA9NLwbrz1ufKrU8qQFVKU9Ah8qMM=";
+    sha256 = "sha256-QmM3JaSLCQn9eqKqSNL13b2DrsxIGiCztbxobsHbbq0=";
   };
   meta = {
     description = "HyDE Theme: Mac OS";
-    homepage = "https://github.com/HyDE-Project/hyde-gallery/tree/1701be171600db27b04f8bf704dc37efe36cd282";
-    priority = 10;
+    homepage = "https://github.com/HyDE-Project/hyde-gallery/tree/Mac-Os";
   };
 }

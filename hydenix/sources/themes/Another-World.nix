@@ -4,13 +4,12 @@ mkTheme rec {
   src = pkgs.fetchFromGitHub {
     owner = "cyb3rgh0u1";
     repo = "Another-World";
-    rev = "main";
+    rev = "82d80baed02216017d5800666cb266ded8dffca3";
     name = name;
-    sha256 = "sha256-91g0u+oOBXL6PBV6q0DUA4HX8KMcSS47pLxqadaxb58=";
+    sha256 = "sha256-DLx+8kuW2DrTWFFrbB670iHKYqUfzNUvfQobKjUlVsY=";
   };
   meta = {
     description = "HyDE Theme: Another World";
     homepage = "https://github.com/cyb3rgh0u1/Another-World";
-    priority = 10;
   };
 }

@@ -3,7 +3,7 @@
 
   inputs = {
     # Hydenix's nixpkgs
-    hydenix-nixpkgs.url = "github:nixos/nixpkgs/12a55407652e04dcf2309436eb06fef0d3713ef3";
+    hydenix-nixpkgs.url = "github:nixos/nixpkgs/f8e81fc7eb063db454f563cdd596fb96a5ad1497";
 
     home-manager = {
       url = "github:nix-community/home-manager";
